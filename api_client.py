@@ -29,12 +29,12 @@ def call_api(action, params, api_key=None):
             else:
                 print("Пустой ответ от сервера")
                 return None
+        except json.JSONDecodeError as e:
+            print(f"Ошибка при декодировании JSON: {e}")
+            return None
         except ValueError:
             # print(response.text)
             print("Неверный формат JSON")
-            return None
-        except json.JSONDecodeError as e:
-            print(f"Ошибка при декодировании JSON: {e}")
             return None
     else:
         print(f"Ошибка: {response.status_code}")
@@ -101,7 +101,6 @@ async def add_order_package(api_key, service_id, link):
     """
     action = 'add'
     params = {'key': api_key,
-              'action': action,
               'service': service_id,
               'link': link}
 
@@ -119,7 +118,6 @@ async def add_order_custom_comments(api_key, service_id, link, comments):
     """
     action = 'add'
     params = {'key': api_key,
-              'action': action,
               'service': service_id,
               'link': link,
               'comments': comments}
@@ -139,7 +137,6 @@ async def add_order_mentions(api_key, service_id, link, quantity, usernames):
     """
     action = 'add'
     params = {'key': api_key,
-              'action': action,
               'service': service_id,
               'link': link,
               'quantity': quantity,
@@ -161,7 +158,6 @@ async def add_order_mentions_with_hashtags(api_key, service_id, link, quantity, 
     """
     action = 'add'
     params = {'key': api_key,
-              'action': action,
               'service': service_id,
               'link': link,
               'quantity': quantity,
@@ -182,7 +178,6 @@ async def add_order_mentions_custom_list(api_key, service_id, link, usernames):
     """
     action = 'add'
     params = {'key': api_key,
-              'action': action,
               'service': service_id,
               'link': link,
               'usernames': usernames}
@@ -202,7 +197,6 @@ async def add_order_mentions_hashtag(api_key, service_id, link, quantity, hashta
     """
     action = 'add'
     params = {'key': api_key,
-              'action': action,
               'service': service_id,
               'link': link,
               'quantity': quantity,
@@ -223,7 +217,6 @@ async def add_order_mentions_user_followers(api_key, service_id, link, quantity,
     """
     action = 'add'
     params = {'key': api_key,
-              'action': action,
               'service': service_id,
               'link': link,
               'quantity': quantity,
@@ -244,7 +237,6 @@ async def add_order_mentions_media_likers(api_key, service_id, link, quantity, m
     """
     action = 'add'
     params = {'key': api_key,
-              'action': action,
               'service': service_id,
               'link': link,
               'quantity': quantity,
@@ -264,7 +256,6 @@ async def add_order_custom_comments_package(api_key, service_id, link, comments)
     """
     action = 'add'
     params = {'key': api_key,
-              'action': action,
               'service': service_id,
               'link': link,
               'comments': comments}
@@ -284,7 +275,6 @@ async def add_order_comment_likes(api_key, service_id, link, quantity, username)
     """
     action = 'add'
     params = {'key': api_key,
-              'action': action,
               'service': service_id,
               'link': link,
               'quantity': quantity,
@@ -305,7 +295,6 @@ async def add_order_poll(api_key, service_id, link, quantity, answer_number):
     """
     action = 'add'
     params = {'key': api_key,
-              'action': action,
               'service': service_id,
               'link': link,
               'quantity': quantity,
@@ -326,7 +315,6 @@ async def add_order_invites_from_groups(api_key, service_id, link, quantity, gro
     """
     action = 'add'
     params = {'key': api_key,
-              'action': action,
               'service': service_id,
               'link': link,
               'quantity': quantity,
@@ -335,7 +323,8 @@ async def add_order_invites_from_groups(api_key, service_id, link, quantity, gro
     return call_api(action, params)
 
 
-async def add_order_subscriptions(api_key, service_id, username, min_quantity, max_quantity, posts=None, old_posts=None, delay=None, expiry=None):
+async def add_order_subscriptions(api_key, service_id, username, min_quantity, max_quantity,
+                                  posts=None, old_posts=None, delay=None, expiry=None):
     """
     Добавляет заказ типа "Subscriptions"
     :param api_key: ключ API
@@ -351,7 +340,6 @@ async def add_order_subscriptions(api_key, service_id, username, min_quantity, m
     """
     action = 'add'
     params = {'key': api_key,
-              'action': action,
               'service': service_id,
               'username': username,
               'min': min_quantity,
@@ -471,5 +459,5 @@ def get_user_balance(api_key):
     return call_api(action, params)
 
 
-api_key = config.api_key.get_secret_value()
-service_list = get_service_list(api_key)
+user_api_key = config.user_api_key.get_secret_value()
+service_list = get_service_list(user_api_key)

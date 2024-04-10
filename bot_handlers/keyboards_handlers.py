@@ -92,7 +92,7 @@ async def service_list_handler(message: types.Message, state: FSMContext):
     try:
         if message.text == "💼 Перечень услуг накрутки":
             # Получение списка услуг и создание клавиатуры для перечня услуг
-            api_key = config.api_key.get_secret_value()
+            api_key = config.user_api_key.get_secret_value()
             service_list_data = await get_service_list(api_key)
             # Запись service_list_data в state_data
             await state.update_data(service_list_data=service_list_data)
