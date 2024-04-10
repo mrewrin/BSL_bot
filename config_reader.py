@@ -10,7 +10,8 @@ env_vars = dotenv_values(".env")
 
 class Settings(BaseSettings):
     bot_token: SecretStr
-    db_name: str
+    db1_name: str
+    db2_name: str
     db_user: str
     db_password: SecretStr
     db_host: str
@@ -22,7 +23,8 @@ class Settings(BaseSettings):
 
 config = Settings(
     bot_token=SecretStr(env_vars['BOT_TOKEN']),
-    db_name=env_vars['DB_NAME'],
+    db1_name=env_vars['DB1_NAME'],
+    db2_name=env_vars['DB2_NAME'],
     db_user=env_vars['DB_USER'],
     db_password=SecretStr(env_vars['DB_PASSWORD']),
     db_host=env_vars['DB_HOST'],

@@ -67,7 +67,7 @@ async def get_service_list(api_key):
         return None
 
 
-def add_order(api_key, service_id, link, quantity, runs=None, interval=None):
+async def add_order_default(api_key, service_id, link, quantity, runs=None, interval=None):
     """
     Добавляет заказ
     :param api_key: ключ API
@@ -79,7 +79,10 @@ def add_order(api_key, service_id, link, quantity, runs=None, interval=None):
     :return: идентификатор заказа
     """
     action = 'add'
-    params = {'key': api_key, 'service': service_id, 'link': link, 'quantity': quantity}
+    params = {'key': api_key,
+              'service': service_id,
+              'link': link,
+              'quantity': quantity}
     if runs is not None:
         params['runs'] = runs
     if interval is not None:
@@ -88,7 +91,284 @@ def add_order(api_key, service_id, link, quantity, runs=None, interval=None):
     return call_api(action, params)
 
 
-def get_order_status(api_key, order_id):
+async def add_order_package(api_key, service_id, link):
+    """
+    Добавляет заказ типа "Package"
+    :param api_key: ключ API
+    :param service_id: идентификатор услуги
+    :param link: ссылка на страницу
+    :return: идентификатор заказа
+    """
+    action = 'add'
+    params = {'key': api_key,
+              'action': action,
+              'service': service_id,
+              'link': link}
+
+    return call_api(action, params)
+
+
+async def add_order_custom_comments(api_key, service_id, link, comments):
+    """
+    Добавляет заказ типа "Custom Comments"
+    :param api_key: ключ API
+    :param service_id: идентификатор услуги
+    :param link: ссылка на страницу
+    :param comments: список комментариев
+    :return: идентификатор заказа
+    """
+    action = 'add'
+    params = {'key': api_key,
+              'action': action,
+              'service': service_id,
+              'link': link,
+              'comments': comments}
+
+    return call_api(action, params)
+
+
+async def add_order_mentions(api_key, service_id, link, quantity, usernames):
+    """
+    Добавляет заказ типа "Mentions"
+    :param api_key: ключ API
+    :param service_id: идентификатор услуги
+    :param link: ссылка на страницу
+    :param quantity: необходимое количество
+    :param usernames: список пользователей
+    :return: идентификатор заказа
+    """
+    action = 'add'
+    params = {'key': api_key,
+              'action': action,
+              'service': service_id,
+              'link': link,
+              'quantity': quantity,
+              'usernames': usernames}
+
+    return call_api(action, params)
+
+
+async def add_order_mentions_with_hashtags(api_key, service_id, link, quantity, usernames, hashtags):
+    """
+    Добавляет заказ типа "Mentions with Hashtags"
+    :param api_key: ключ API
+    :param service_id: идентификатор услуги
+    :param link: ссылка на страницу
+    :param quantity: необходимое количество
+    :param usernames: список пользователей
+    :param hashtags: список хэштегов
+    :return: идентификатор заказа
+    """
+    action = 'add'
+    params = {'key': api_key,
+              'action': action,
+              'service': service_id,
+              'link': link,
+              'quantity': quantity,
+              'usernames': usernames,
+              'hashtags': hashtags}
+
+    return call_api(action, params)
+
+
+async def add_order_mentions_custom_list(api_key, service_id, link, usernames):
+    """
+    Добавляет заказ типа "Mentions Custom List"
+    :param api_key: ключ API
+    :param service_id: идентификатор услуги
+    :param link: ссылка на страницу
+    :param usernames: список пользователей
+    :return: идентификатор заказа
+    """
+    action = 'add'
+    params = {'key': api_key,
+              'action': action,
+              'service': service_id,
+              'link': link,
+              'usernames': usernames}
+
+    return call_api(action, params)
+
+
+async def add_order_mentions_hashtag(api_key, service_id, link, quantity, hashtag):
+    """
+    Добавляет заказ типа "Mentions Hashtag"
+    :param api_key: ключ API
+    :param service_id: идентификатор услуги
+    :param link: ссылка на страницу
+    :param quantity: необходимое количество
+    :param hashtag: хэштег
+    :return: идентификатор заказа
+    """
+    action = 'add'
+    params = {'key': api_key,
+              'action': action,
+              'service': service_id,
+              'link': link,
+              'quantity': quantity,
+              'hashtag': hashtag}
+
+    return call_api(action, params)
+
+
+async def add_order_mentions_user_followers(api_key, service_id, link, quantity, username):
+    """
+    Добавляет заказ типа "Mentions User Followers"
+    :param api_key: ключ API
+    :param service_id: идентификатор услуги
+    :param link: ссылка на страницу
+    :param quantity: необходимое количество
+    :param username: имя пользователя
+    :return: идентификатор заказа
+    """
+    action = 'add'
+    params = {'key': api_key,
+              'action': action,
+              'service': service_id,
+              'link': link,
+              'quantity': quantity,
+              'username': username}
+
+    return call_api(action, params)
+
+
+async def add_order_mentions_media_likers(api_key, service_id, link, quantity, media):
+    """
+    Добавляет заказ типа "Mentions Media Likers"
+    :param api_key: ключ API
+    :param service_id: идентификатор услуги
+    :param link: ссылка на страницу
+    :param quantity: необходимое количество
+    :param media: ссылка на медиа
+    :return: идентификатор заказа
+    """
+    action = 'add'
+    params = {'key': api_key,
+              'action': action,
+              'service': service_id,
+              'link': link,
+              'quantity': quantity,
+              'media': media}
+
+    return call_api(action, params)
+
+
+async def add_order_custom_comments_package(api_key, service_id, link, comments):
+    """
+    Добавляет заказ типа "Custom Comments Package"
+    :param api_key: ключ API
+    :param service_id: идентификатор услуги
+    :param link: ссылка на страницу
+    :param comments: список комментариев
+    :return: идентификатор заказа
+    """
+    action = 'add'
+    params = {'key': api_key,
+              'action': action,
+              'service': service_id,
+              'link': link,
+              'comments': comments}
+
+    return call_api(action, params)
+
+
+async def add_order_comment_likes(api_key, service_id, link, quantity, username):
+    """
+    Добавляет заказ типа "Comment Likes"
+    :param api_key: ключ API
+    :param service_id: идентификатор услуги
+    :param link: ссылка на страницу
+    :param quantity: необходимое количество
+    :param username: имя пользователя, чей комментарий нужно лайкнуть
+    :return: идентификатор заказа
+    """
+    action = 'add'
+    params = {'key': api_key,
+              'action': action,
+              'service': service_id,
+              'link': link,
+              'quantity': quantity,
+              'username': username}
+
+    return call_api(action, params)
+
+
+async def add_order_poll(api_key, service_id, link, quantity, answer_number):
+    """
+    Добавляет заказ типа "Poll"
+    :param api_key: ключ API
+    :param service_id: идентификатор услуги
+    :param link: ссылка на страницу с опросом
+    :param quantity: необходимое количество голосов
+    :param answer_number: номер ответа в опросе
+    :return: идентификатор заказа
+    """
+    action = 'add'
+    params = {'key': api_key,
+              'action': action,
+              'service': service_id,
+              'link': link,
+              'quantity': quantity,
+              'answer_number': answer_number}
+
+    return call_api(action, params)
+
+
+async def add_order_invites_from_groups(api_key, service_id, link, quantity, groups):
+    """
+    Добавляет заказ типа "Invites from Groups"
+    :param api_key: ключ API
+    :param service_id: идентификатор услуги
+    :param link: ссылка на страницу
+    :param quantity: необходимое количество
+    :param groups: список групп
+    :return: идентификатор заказа
+    """
+    action = 'add'
+    params = {'key': api_key,
+              'action': action,
+              'service': service_id,
+              'link': link,
+              'quantity': quantity,
+              'groups': groups}
+
+    return call_api(action, params)
+
+
+async def add_order_subscriptions(api_key, service_id, username, min_quantity, max_quantity, posts=None, old_posts=None, delay=None, expiry=None):
+    """
+    Добавляет заказ типа "Subscriptions"
+    :param api_key: ключ API
+    :param service_id: идентификатор услуги
+    :param username: имя пользователя
+    :param min_quantity: минимальное количество
+    :param max_quantity: максимальное количество
+    :param posts: количество будущих постов для создания заказов
+    :param old_posts: количество существующих постов для создания заказов
+    :param delay: задержка в минутах
+    :param expiry: дата истечения срока действия
+    :return: идентификатор заказа
+    """
+    action = 'add'
+    params = {'key': api_key,
+              'action': action,
+              'service': service_id,
+              'username': username,
+              'min': min_quantity,
+              'max': max_quantity}
+    if posts is not None:
+        params['posts'] = posts
+    if old_posts is not None:
+        params['old_posts'] = old_posts
+    if delay is not None:
+        params['delay'] = delay
+    if expiry is not None:
+        params['expiry'] = expiry
+
+    return call_api(action, params)
+
+
+async def get_order_status(api_key, order_id):
     """
     Получает статус заказа
     :param api_key: ключ API
